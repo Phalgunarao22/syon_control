@@ -1,7 +1,9 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@workspace/ui"],
+  cacheComponents: true,
+  transpilePackages: ["@workspace/ui", "@workspace/db"],
+  serverExternalPackages: ["@prisma/client"],
 }
 
 export default nextConfig

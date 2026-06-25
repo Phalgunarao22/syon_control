@@ -1,4 +1,5 @@
-import { PrismaClient } from "./generated/prisma";
+import { PrismaClient } from "@prisma/client";
+import { PrismaNeonHttp } from "@prisma/adapter-neon";
 import { Redis } from "@upstash/redis";
 import { Resend } from "resend";
 import { v2 as cloudinary } from "cloudinary";
@@ -7,10 +8,13 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
+const adapter = new PrismaNeonHttp(process.env.DATABASE_URL!, { arrayMode: false, fullResults: true });
+
 // single instance of prisma client -> prevent multiple instances in development
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
+    adapter,
     log:
       process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
   });
@@ -24,7 +28,7 @@ export const redis = new Redis({
 });
 
 // resend for sending emails
-export const resend = new Resend(process.env.RESEND_API_KEY!);
+export const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy");
 
 // cloudinary for storing images and videos
 cloudinary.config({
@@ -35,4 +39,4 @@ cloudinary.config({
 
 export { cloudinary };
 
-export * from "./generated/prisma";
+export * from "@prisma/client";

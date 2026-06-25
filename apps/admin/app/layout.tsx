@@ -3,6 +3,9 @@ import { Geist, Geist_Mono, Inter } from "next/font/google"
 import "@workspace/ui/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@workspace/ui/lib/utils";
+import { TooltipProvider } from "@workspace/ui/components/tooltip";
+
+import { ForcePasswordChangeModal } from "@/components/force-password-change-modal";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'})
 
@@ -23,7 +26,12 @@ export default function RootLayout({
       className={cn("antialiased", fontMono.variable, "font-sans", inter.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <TooltipProvider delay={0}>
+            <ForcePasswordChangeModal />
+            {children}
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
