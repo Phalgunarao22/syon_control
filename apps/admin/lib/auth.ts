@@ -3,7 +3,16 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@workspace/db";
 
 export const auth = betterAuth({
-  trustedOrigins: ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:3003", "http://localhost:3004"],
+  trustedOrigins: [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:3002",
+    "http://localhost:3003",
+    "http://localhost:3004",
+    "https://syon-control-admins.vercel.app",
+    ...(process.env.BETTER_AUTH_URL ? [process.env.BETTER_AUTH_URL] : []),
+    ...(process.env.NEXT_PUBLIC_APP_URL ? [process.env.NEXT_PUBLIC_APP_URL] : []),
+  ],
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),

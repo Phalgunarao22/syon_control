@@ -45,7 +45,30 @@ async function main() {
   // Check if super admin already exists
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
-    console.log(`ℹ️   User ${email} already exists (role: ${existing.role}). Skipping.`);
+    console.log(`ℹ️   User ${email} already exists (role: ${existing.role}). Updating password.`);
+    const hashedPassword = await hashPassword(password);
+    
+    const existingAccount = await prisma.account.findFirst({
+      where: { userId: existing.id, providerId: "credential" }
+    });
+
+    if (existingAccount) {
+      await prisma.account.update({
+        where: { id: existingAccount.id },
+        data: { password: hashedPassword }
+      });
+    } else {
+      await prisma.account.create({
+        data: {
+          accountId: existing.id,
+          providerId: "credential",
+          userId: existing.id,
+          password: hashedPassword,
+        }
+      });
+    }
+    
+    console.log(`✅  Password updated successfully for: ${email}`);
     await prisma.$disconnect();
     return;
   }
