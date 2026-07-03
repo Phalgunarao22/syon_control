@@ -1,7 +1,16 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { LoginForm } from "./login-form";
 import Silk from "@workspace/ui/components/Silk";
 
 export default function LoginPage() {
+  const [year, setYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
   return (
     <div className="flex min-h-svh flex-col lg:flex-row bg-[#fafafa]">
       {/* Left side: Silk Background */}
@@ -29,7 +38,7 @@ export default function LoginPage() {
 
         {/* Minimal Footer */}
         <div className="absolute bottom-8 left-0 w-full text-center px-6 text-sm text-neutral-400 font-medium">
-          &copy; {new Date().getFullYear()} Syon Controls. All rights reserved.
+          &copy; {year || 2026} Syon Controls. All rights reserved.
         </div>
       </div>
     </div>

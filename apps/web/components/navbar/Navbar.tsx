@@ -5,15 +5,16 @@ import Link from "next/link"
 import { useModal } from "@/components/ui/ModalProvider"
 
 const NAV_LINKS = [
-  { label: "Home", href: "#" },
+  { label: "Home", href: "/" },
   { label: "About", href: "#" },
   { label: "Solutions", href: "#" },
   { label: "Connect", href: "#" },
+  { label: "Products", href: "/products" }
 ] as const
 
 function SyonLogo() {
   return (
-    <Link href="#" className="flex items-center group" aria-label="Syon Controls Home">
+    <Link href="/" className="flex items-center group" aria-label="Syon Controls Home">
       <img
         src="/images/syon_controls/SyonControls.jpg"
         alt="Syon Controls"

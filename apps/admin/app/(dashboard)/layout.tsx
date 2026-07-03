@@ -1,6 +1,7 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@workspace/ui/components/sidebar";
 import { Separator } from "@workspace/ui/components/separator";
+import { Suspense } from "react";
 
 export default function DashboardLayout({
   children,
@@ -19,7 +20,9 @@ export default function DashboardLayout({
           </header>
           <main className="flex-1 overflow-auto p-6 md:p-8">
             <div className="mx-auto max-w-6xl w-full">
-              {children}
+              <Suspense fallback={<div className="flex items-center justify-center min-h-[200px] text-neutral-500 text-sm">Loading...</div>}>
+                {children}
+              </Suspense>
             </div>
           </main>
         </div>

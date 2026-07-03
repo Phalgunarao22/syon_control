@@ -28,7 +28,7 @@ export default function Footer() {
           {/* Column 1: Brand */}
           <div className="flex flex-col gap-5 sm:gap-6 sm:col-span-2 lg:col-span-1">
             {/* Logo */}
-            <Link href="#" className="flex items-center">
+            <Link href="/" className="flex items-center">
               <img
                 src="/images/syon_controls/SyonControls.jpg"
                 alt="Syon Controls"

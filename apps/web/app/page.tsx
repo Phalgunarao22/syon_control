@@ -7,13 +7,27 @@ import SmartAppSection from "@/components/smart-app/SmartAppSection"
 import BrandsSection from "@/components/brands/BrandsSection"
 import CTASection from "@/components/cta/CTASection"
 import Footer from "@/components/footer/Footer"
+import { prisma } from "@workspace/db"
+import { cacheLife, cacheTag } from "next/cache"
 
-export default function Page() {
+async function getCategories() {
+  "use cache"
+  cacheTag("categories")
+  cacheLife("max")
+
+  return prisma.category.findMany({
+    orderBy: { order: "asc" }
+  })
+}
+
+export default async function Page() {
+  const categories = await getCategories()
+
   return (
     <>
       <Navbar />
       <Hero />
-      <SimplicitySection />
+      <SimplicitySection initialCategories={categories} />
       <LuxurySection />
       <RoomsSection />
       <SmartAppSection />

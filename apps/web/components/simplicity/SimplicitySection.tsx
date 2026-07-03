@@ -1,46 +1,27 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import Link from "next/link"
 
-const cards = [
-  {
-    id: 1,
-    title: "Smart Lighting",
-  },
-  {
-    id: 2,
-    title: "Climate Control",
-  },
-  {
-    id: 3,
-    title: "Security Systems",
-  },
-  {
-    id: 4,
-    title: "Home Theater",
-  },
-  {
-    id: 5,
-    title: "Smart Shades",
-  },
-  {
-    id: 6,
-    title: "Audio Systems",
-  },
-  {
-    id: 7,
-    title: "Energy Management",
-  },
-  {
-    id: 8,
-    title: "Network & WiFi",
-  },
+const defaultCards = [
+  { id: 1, title: "Smart Lighting", image: "/images/unrivaled/unrivaled.png" },
+  { id: 2, title: "Climate Control", image: "/images/unrivaled/unrivaled.png" },
+  { id: 3, title: "Security Systems", image: "/images/unrivaled/unrivaled.png" },
+  { id: 4, title: "Home Theater", image: "/images/unrivaled/unrivaled.png" },
+  { id: 5, title: "Smart Shades", image: "/images/unrivaled/unrivaled.png" },
+  { id: 6, title: "Audio Systems", image: "/images/unrivaled/unrivaled.png" },
+  { id: 7, title: "Energy Management", image: "/images/unrivaled/unrivaled.png" },
+  { id: 8, title: "Network & WiFi", image: "/images/unrivaled/unrivaled.png" },
 ]
 
-// Duplicate the first 4 cards at the end for seamless infinite sliding
-const extendedCards = [...cards, ...cards.slice(0, 4)]
+export default function SimplicitySection({ initialCategories = [] }: { initialCategories?: any[] }) {
+  const cards = initialCategories.length > 0 
+    ? initialCategories.map(c => ({ id: c.id, title: c.name, image: c.image }))
+    : defaultCards
 
-export default function SimplicitySection() {
+  // Duplicate the first 4 cards at the end for seamless infinite sliding
+  const extendedCards = [...cards, ...cards.slice(0, 4)]
+
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(true)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -54,11 +35,10 @@ export default function SimplicitySection() {
     }
 
     if (currentIndex === cards.length) {
-      // Instantly reset to 0 without transition
       const timer = setTimeout(() => {
         setIsTransitioning(false)
         setCurrentIndex(0)
-      }, 500) // matches transition duration (500ms)
+      }, 500)
       return () => clearTimeout(timer)
     } else {
       play()
@@ -67,7 +47,7 @@ export default function SimplicitySection() {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
     }
-  }, [currentIndex])
+  }, [currentIndex, cards.length])
 
   return (
     <section className="w-full bg-black py-16 sm:py-20 lg:py-24 overflow-hidden">
@@ -92,14 +72,15 @@ export default function SimplicitySection() {
             }}
           >
             {extendedCards.map((card, idx) => (
-              <div
+              <Link
+                href="/products"
                 key={`${card.id}-${idx}`}
                 className="flex flex-col rounded-[24px] overflow-hidden aspect-[4/5] bg-[#18191B] cursor-pointer border border-white/5 shrink-0 w-full sm:w-[calc((50%-12px))] lg:w-[calc((25%-24px))] group"
               >
                 {/* Image Container */}
                 <div className="relative flex-1 overflow-hidden">
                   <img
-                    src="/images/unrivaled/unrivaled.png"
+                    src={card.image}
                     alt={card.title}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
                   />
@@ -113,7 +94,7 @@ export default function SimplicitySection() {
                     {card.title}
                   </h3>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

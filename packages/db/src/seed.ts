@@ -10,16 +10,18 @@
  */
 
 import "dotenv/config";
+import { config } from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import { PrismaNeonHttp } from "@prisma/adapter-neon";
 
 // better-auth's own hasher — same algorithm used internally at sign-in
 import { hashPassword } from "better-auth/crypto";
+config({ path: ".env.local" })
 
 async function main() {
-  const email = "sachindra@sisyaclass.com";
-  const password = "1234567890";
-  const name = "Sachindra";
+  const email = "phalguna@sisyaclass.com";
+  const password = "123456789";
+  const name = "Phalguna";
 
   if (!email || !password) {
     console.error(

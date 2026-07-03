@@ -59,11 +59,14 @@ export async function createProduct(data: { name: string, description: string, i
 
   const product = await prisma.product.create({
     data,
-    include: { category: true }
+  });
+  
+  const category = await prisma.category.findUnique({
+    where: { id: data.categoryId }
   });
 
   await revalidateWebCache("products");
-  return product;
+  return { ...product, category };
 }
 
 export async function updateProduct(id: string, data: { name: string, description: string, images: string[], categoryId: string, rating: number }) {
@@ -72,11 +75,14 @@ export async function updateProduct(id: string, data: { name: string, descriptio
   const product = await prisma.product.update({
     where: { id },
     data,
-    include: { category: true }
+  });
+  
+  const category = await prisma.category.findUnique({
+    where: { id: data.categoryId }
   });
 
   await revalidateWebCache("products");
-  return product;
+  return { ...product, category };
 }
 
 export async function deleteProduct(id: string) {

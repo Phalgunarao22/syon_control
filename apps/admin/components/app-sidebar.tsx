@@ -40,7 +40,7 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-r border-neutral-200 bg-[#fafafa]">
       <SidebarHeader className="border-b border-neutral-200/60 p-0 overflow-hidden bg-black flex items-center justify-center h-16">
-        <img src={logo.src} alt="Syon Controls" className="h-full w-full object-contain" />
+        <img src={logo.src} alt="Syon Controls" className="h-full w-full object-contain bg-white" />     
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -69,7 +69,7 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               )}
-              
+
               <Collapsible defaultOpen className="group/collapsible">
                 <SidebarMenuItem>
                   <SidebarMenuButton render={<CollapsibleTrigger />} tooltip="Inventory" className="hover:bg-neutral-100 hover:text-neutral-900">
