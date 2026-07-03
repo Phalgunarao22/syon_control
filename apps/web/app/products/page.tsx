@@ -6,10 +6,15 @@ import { prisma } from "@workspace/db"
 import { cacheLife, cacheTag } from "next/cache"
 import { ProductContent } from "./ProductContent"
 
+
 async function getCachedCategories() {
   "use cache"
   cacheTag("categories")
   cacheLife("max")
+
+  if (!process.env.DATABASE_URL) {
+    return []
+  }
 
   return prisma.category.findMany({
     orderBy: { order: "asc" }
@@ -20,6 +25,10 @@ async function getCachedProducts() {
   "use cache"
   cacheTag("products")
   cacheLife("max")
+
+  if (!process.env.DATABASE_URL) {
+    return []
+  }
 
   return prisma.product.findMany({
     orderBy: { createdAt: "desc" },

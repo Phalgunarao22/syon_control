@@ -10,10 +10,15 @@ import Footer from "@/components/footer/Footer"
 import { prisma } from "@workspace/db"
 import { cacheLife, cacheTag } from "next/cache"
 
+
 async function getCategories() {
   "use cache"
   cacheTag("categories")
   cacheLife("max")
+
+  if (!process.env.DATABASE_URL) {
+    return []
+  }
 
   return prisma.category.findMany({
     orderBy: { order: "asc" }

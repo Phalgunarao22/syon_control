@@ -7,6 +7,10 @@ async function getCachedSlides() {
   cacheTag("hero-slides");
   cacheLife("max"); // or another built-in profile like 'minutes', 'default'
 
+  if (!process.env.DATABASE_URL) {
+    return [];
+  }
+
   return prisma.heroSlide.findMany({
     orderBy: { order: "asc" },
     select: {
