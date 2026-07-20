@@ -94,12 +94,46 @@ export default function SmartAppSection() {
             </div>
 
             {/* Badges Container */}
-            <div className="flex items-center justify-center mt-2">
+            <div className="flex items-center justify-center mt-2 relative group cursor-pointer transition-all duration-300 hover:opacity-90 hover:scale-105">
               <img
                 src="/images/smart-app/googleplay&appstore.png"
                 alt="Get it on Google Play and App Store"
-                className="h-[48px] w-auto object-contain cursor-pointer transition-all duration-300 hover:opacity-90 hover:scale-105"
+                className="h-[48px] w-auto object-contain block"
               />
+              <div className="absolute inset-0 flex">
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.tuya.smartlife"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                  aria-label="Get it on Google Play"
+                  onClick={(e) => {
+                    if (typeof window !== 'undefined') {
+                      const ua = navigator.userAgent;
+                      if (/iPad|iPhone|iPod/.test(ua)) {
+                        e.preventDefault();
+                        window.open("https://apps.apple.com/in/app/smartlife-smart-living/id1115101477", "_blank");
+                      }
+                    }
+                  }}
+                />
+                <a
+                  href="https://apps.apple.com/in/app/smartlife-smart-living/id1115101477"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                  aria-label="Download on the App Store"
+                  onClick={(e) => {
+                    if (typeof window !== 'undefined') {
+                      const ua = navigator.userAgent;
+                      if (/android/i.test(ua)) {
+                        e.preventDefault();
+                        window.open("https://play.google.com/store/apps/details?id=com.tuya.smartlife", "_blank");
+                      }
+                    }
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

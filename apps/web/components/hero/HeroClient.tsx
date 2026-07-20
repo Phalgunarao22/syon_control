@@ -21,7 +21,7 @@ export default function HeroClient({ slides }: { slides: HeroSlide[] }) {
   }, [slides.length])
 
   return (
-    <section className="relative w-full h-[560px] lg:h-[680px] overflow-hidden mt-[86px] bg-neutral-900">
+    <section className="relative w-full aspect-[16/9] md:aspect-auto md:h-[500px] lg:h-[680px] overflow-hidden mt-[86px] bg-neutral-900">
       {/* Background Carousel */}
       <div className="absolute inset-0 w-full h-full z-0">
         {slides.map((slide, index) => (
